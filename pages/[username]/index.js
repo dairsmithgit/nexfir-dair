@@ -8,6 +8,13 @@ export async function getServerSideProps({ query }) {
 
     const userDoc = await getUserWithUsername(username);
 
+    // if no user 'url://nextfire/[not-a-user]/, short circuit to 404 page
+    if (!userDoc) {
+        return {
+            notFound: true
+        };
+    }
+
     // json serializable data
     let user = null;
     let posts = null;
